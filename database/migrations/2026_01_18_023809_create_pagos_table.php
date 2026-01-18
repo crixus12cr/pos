@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('pagos', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('venta_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('metodos_pago_id')->constrained('metodos_pago');
+            $table->decimal('monto', 10, 2);
             $table->timestamps();
         });
     }

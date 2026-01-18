@@ -11,8 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('movimiento_cajas', function (Blueprint $table) {
+        Schema::create('movimientos_caja', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('caja_id')->constrained()->cascadeOnDelete();
+            $table->enum('tipo', ['entrada', 'salida']);
+            $table->decimal('monto', 10, 2);
+            $table->string('descripcion')->nullable();
+            $table->timestamp('fecha');
             $table->timestamps();
         });
     }
@@ -22,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('movimiento_cajas');
+        Schema::dropIfExists('movimientos_caja');
     }
 };

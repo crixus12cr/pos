@@ -61,4 +61,49 @@ class User extends Authenticatable
             ->map(fn ($word) => Str::substr($word, 0, 1))
             ->implode('');
     }
+
+     // ========================
+    // Relaciones POS
+    // ========================
+
+    /**
+     * Rol del usuario
+     */
+    public function rol()
+    {
+        return $this->belongsTo(Rol::class, 'rol_id');
+    }
+
+    /**
+     * Ventas realizadas por el usuario
+     */
+    public function ventas()
+    {
+        return $this->hasMany(Venta::class, 'usuario_id');
+    }
+
+    /**
+     * Compras registradas por el usuario
+     */
+    public function compras()
+    {
+        return $this->hasMany(Compra::class, 'usuario_id');
+    }
+
+    /**
+     * Cajas abiertas por el usuario
+     */
+    public function cajas()
+    {
+        return $this->hasMany(Caja::class, 'usuario_id');
+    }
+
+    /**
+     * Caja actualmente abierta por el usuario
+     */
+    public function cajaAbierta()
+    {
+        return $this->hasOne(Caja::class, 'usuario_id')
+            ->where('estado', 'abierta');
+    }
 }

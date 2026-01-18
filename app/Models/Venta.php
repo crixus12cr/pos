@@ -6,5 +6,45 @@ use Illuminate\Database\Eloquent\Model;
 
 class Venta extends Model
 {
-    //
+    protected $table = 'ventas';
+
+    protected $fillable = [
+        'usuario_id',
+        'cliente_id',
+        'caja_id',
+        'total',
+        'impuesto_total',
+        'descuento',
+        'estado',
+        'fecha'
+    ];
+
+    protected $casts = [
+        'fecha' => 'datetime'
+    ];
+
+    public function usuario()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function cliente()
+    {
+        return $this->belongsTo(Cliente::class);
+    }
+
+    public function caja()
+    {
+        return $this->belongsTo(Caja::class);
+    }
+
+    public function detalles()
+    {
+        return $this->hasMany(DetalleVenta::class);
+    }
+
+    public function pagos()
+    {
+        return $this->hasMany(Pago::class);
+    }
 }

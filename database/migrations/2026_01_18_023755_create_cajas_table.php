@@ -11,12 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('compras', function (Blueprint $table) {
+        Schema::create('cajas', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('proveedor_id')->constrained('proveedores');
             $table->foreignId('usuario_id')->constrained('users');
-            $table->decimal('total', 10, 2);
-            $table->timestamp('fecha');
+            $table->decimal('monto_apertura', 10, 2);
+            $table->decimal('monto_cierre', 10, 2)->nullable();
+            $table->timestamp('fecha_apertura');
+            $table->timestamp('fecha_cierre')->nullable();
+            $table->string('estado')->default('abierta');
             $table->timestamps();
         });
     }
@@ -26,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('compras');
+        Schema::dropIfExists('cajas');
     }
 };
